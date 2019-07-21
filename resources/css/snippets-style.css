@@ -1,0 +1,33 @@
+@font-face {
+    font-family: "Ubuntu Mono";
+    src: url(/resources/fonts/UbuntuMono-Regular.ttf) format("truetype");
+}
+
+li a {
+    display: block;
+    color: lime;
+    text-align: center;
+    padding: 6px;
+    text-decoration: underline;
+}
+
+li a:first-of-type{
+    padding-left: 0;
+}
+
+body{
+    font-family: "Ubuntu Mono";
+    background-color: black;
+    color: lime;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+  
+li {
+    float: left;
+}
