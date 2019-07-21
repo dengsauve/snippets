@@ -1,0 +1,106 @@
+{
+    "snippets": [
+        {
+            "name": "Non-Curl Post in PHP",
+            "description": "Make a post request and handle response",
+            "language": "php",
+            "body": "$url = 'http:\/\/server.com\/path';\r\n$data = array('key1' => 'value1', 'key2' => 'value2');\r\n\r\n\/\/ use key 'http' even if you send the request to https:\/\/...\r\n$options = array(\r\n    'http' => array(\r\n        'header'  => \"Content-type: application\/x-www-form-urlencoded\\r\\n\",\r\n        'method'  => 'POST',\r\n        'content' => http_build_query($data)\r\n    )\r\n);\r\n$context  = stream_context_create($options);\r\n$result = file_get_contents($url, false, $context);\r\nif ($result === FALSE) { \/* Handle error *\/ }\r\n\r\nvar_dump($result);"
+        },
+        {
+            "name": "24 Hour Weather Report (CLI)",
+            "description": "From the command line, get a simple weather report.",
+            "language": "bash",
+            "body": "#!\/bin\/bash\r\n\r\n# Check for w3m install on Mac\r\ninstall=0;\r\n\r\ncommand -v w3m >\/dev\/null || {\r\n\tinstall=1\r\n\techo >&2 \"I require w3m but it's not installed. Install? (Y\/n)\"\r\n}\r\n\r\nif [ \"$install\" = \"1\" ] \r\nthen\r\n\tread userAnswer\r\n\t\r\n\tif [ \"$userAnswer\" = \"Y\" ]\r\n\tthen\r\n\t\techo \"installing w3m\"\r\n\t\tcommand -v brew update >\/dev\/null || {\r\n\t\t\techo >&2 \"I require brew to install w3m. Please install homebrew.\"\r\n\t\t\tbreak\r\n\t\t}\r\n\t\tbrew install w3m\r\n\t\tw3m -dump weather.dennissauve.com | sed -n 13,20p\r\n\telse\r\n\t\techo \"aborting\"\r\n\tfi\r\nelse\r\n\tw3m -dump weather.dennissauve.com | sed -n 13,20p\r\nfi\r\n"
+        },
+        {
+            "name": "Google reCaptcha v2 in PHP",
+            "description": "Verification code for google's reCaptcha system, version 2. This is for a checkbox style verification.",
+            "language": "php",
+            "body": "\/\/ URL to verify reCaptcha was successful\r\n$url = 'https:\/\/www.google.com\/recaptcha\/api\/siteverify';\r\n\r\n\/\/ Parameters to pass in POST\r\n$g_response = $_POST['g-recaptcha-response'];\r\n$g_secret = 'yourSecretHere';\r\n$data = array(\r\n    'secret' => $g_secret,\r\n    'response' => $g_response,\r\n);\r\n\r\n\/\/ config context options\r\n$options = array(\r\n    'http' => array(\r\n        'header' => \"Content-type: application\/x-www-form-urlencoded\\r\\n\",\r\n        'method' => 'POST',\r\n        'content' => http_build_query($data)\r\n    )\r\n);\r\n\r\n\/\/ create context and get result\r\n$context = stream_context_create($options);\r\n$result = file_get_contents($url, false, $context);\r\n\r\n\/\/ Check if valid result from reCaptcha verification\r\nif ($result === FALSE) {\r\n    \/\/ bad request handler\r\n} else {\r\n    \/\/ decode response to JSON\r\n    $g_result = json_decode($result);\r\n\r\n    \/\/ Check if reCaptcha was validated\r\n    if (!$g_result->success) {\r\n        \/\/ bad reCaptcha handler\r\n    }\r\n    \/\/ Let page load normally if reCaptcha was successfully validated.\r\n}"
+        },
+        {
+            "name": "No HTML Button Outline",
+            "description": "Remove that damn pesky blue outline from your beautiful buttons",
+            "language": "css",
+            "body": ".button:focus{\r\n    outline: none;\r\n}"
+        },
+        {
+            "name": "Kill All PHP Processes",
+            "description": "On a unix system, kill all running php processes",
+            "language": "bash",
+            "body": "kill $(ps aux | grep '[p]hp' | awk '{print $2}')"
+        },
+        {
+            "name": "Regex for ML tags",
+            "description": "A regex pattern to identify HTML\/XML tags",
+            "language": "regex",
+            "body": "<[^>]*>"
+        },
+        {
+            "name": "Apache Force HTTPS",
+            "description": "Use the .htaccess file to force https",
+            "language": "apacheconf",
+            "body": "# Force HTTPS\r\nRewriteEngine On\r\nRewriteCond %{HTTPS} !=on\r\nRewriteRule ^(.*)$ https:\/\/%{HTTP_HOST}%{REQUEST_URI} [L,R=301,NE]"
+        },
+        {
+            "name": "Absolute Center HTML El",
+            "description": "Use CSS to absolutely center a CSS element",
+            "language": "css",
+            "body": ".main-header {\r\n    display: inline-block;\r\n    position: absolute;\r\n    left: 50%;\r\n    -webkit-transform: translateX(-50%);\r\n    transform: translateX(-50%);\r\n}"
+        },
+        {
+            "name": "Laravel - Moodle API Request",
+            "description": "Example of an API call to Moodle from Laravel",
+            "language": "php",
+            "body": "\/\/ Build parameters for API query.\r\n$params = [\r\n    'wsfunction' => 'core_enrol_get_users_courses',\r\n    'moodlewsrestformat' => 'json',\r\n    'userid' => $userID,\r\n];\r\n\r\n\/\/ Add the moodle token to the request\r\n$params['wstoken'] = env('MOODLE_TOKEN', 'moodle_token');\r\n\r\n\/\/ Build the request URL\r\n$url = rtrim(env('MOODLE_URL'), '\/') .\r\n    '\/webservice\/rest\/server.php?' .\r\n    http_build_query($params);\r\n\r\nfile_get_contents($url, false, stream_context_create([\r\n    'ssl' => [\r\n        'verify_peer' => false,\r\n        'verify_peer_name' => false\r\n    ]\r\n]));"
+        },
+        {
+            "name": "SSH Config",
+            "description": "Example of SSH Config file",
+            "language": "bash",
+            "body": "Host example\r\n    User exampleuser\r\n    HostName cloud.example.com\r\n    IdentityFile ~\/.ssh\/exampleKeyFile.pem"
+        },
+        {
+            "name": "Load in Service",
+            "description": "",
+            "language": "typescript",
+            "body": "constructor( private offenseCategoryApiService : OffenseCategoriesApiService) {\r\n    this.offenseCategoryApiService.getAll().toPromise().then();"
+        },
+        {
+            "name": "Restart VirtualBox Mac",
+            "description": "Restarts with the startup script, useful for troubleshooting VirtualBoxCLI errors",
+            "language": "bash",
+            "body": "sudo \"\/Library\/Application Support\/VirtualBox\/LaunchDaemons\/VirtualBoxStartup.sh\" restart"
+        },
+        {
+            "name": "dotnet ModelState Dump",
+            "description": "Helps with troubleshooting and debugging where model states may be a problem",
+            "language": "c#",
+            "body": "var allErrors = ModelState.Values.SelectMany(v => v.Errors.Select(b => b.ErrorMessage));"
+        },
+        {
+            "name": "Angular KendoGrid Loading Template",
+            "description": "Shows a loading spinner in a kendo grid",
+            "language": "html",
+            "body": "<kendo-grid [data]=\"yourData\" [loading]=\"isDataLoading\">\r\n    <ng-template #noRecordsTemplate kendoGridNoRecordsTemplate>\r\n      <div [innerHTML]=\"noDataMessage\"><\/div>\r\n      <\/ng-template>\r\n      ...\r\n<\/kendo-grid>"
+        },
+        {
+            "name": "Angular KendoGrid Loading Logic",
+            "description": "Controls KendoGrid loading spinners display",
+            "language": "typescript",
+            "body": "@ViewChild('noRecordsTemplate', {static: false}) noRecordsTemplate;\r\nnoDataMessage = \"<br\/><br\/>\";\r\nisDataLoading: boolean = false;\r\n\r\nthis.isDataLoading = true;\r\nthis.noDataMessage = result.total == 0 ? \"No Records to Display\" : \"<br\/><br\/>\";\r\nthis.isDataLoading = false;\r\n"
+        },
+        {
+            "name": "Angular KendoGrid Id Link",
+            "description": "Template for kendo-grid-column to be an edit link",
+            "language": "html",
+            "body": "<kendo-grid-column>\r\n    <ng-template kendoGridCellTemplate let-dataItem>\r\n        <a style=\"text-decoration: underline\" [routerLink]=\"[dataItem.id]+'\/edit'\">{{ dataItem.id }}<\/a>\r\n    <\/ng-template>\r\n<\/kendo-grid-column>"
+        },
+        {
+            "name": "Filtering by apiRecordRequest - dotnet core",
+            "description": "Example of filtering through apiRecordRequest filters - assumes the query has already been made, and refines it",
+            "language": "dotnet",
+            "body": "foreach (var filter in apiRecordRequest.Filter.Filters)\r\n{\r\n    if (filter.Field == \"id\")\r\n    {\r\n        query = query.Where(x => x.Id == id);\r\n    }\r\n    \/\/ ... and so on and on\r\n}"
+        }
+    ]
+}
