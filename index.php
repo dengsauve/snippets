@@ -49,11 +49,11 @@
     <head>
         <title>Dennis's Code Snippets</title>
 
-	<meta name="title" content="Dennis's Code Snippets">
-	<meta name="description" content="Bytes of useful code that I reference every now and then">
-	<meta name="author" content="Dennis Sauve">
-	<meta name="image" content="https://snippets.dennissauve.com/resources/images/site-image.png">
-	<meta name="url" content="https://snippets.dennissauve.com">
+	<meta name="og:title" content="Dennis's Code Snippets" />
+	<meta name="og:description" content="Bytes of useful code that I reference every now and then" />
+	<meta name="og:author" content="Dennis Sauve" />
+	<meta name="og:image" content="https://snippets.dennissauve.com/resources/images/site-image.png" />
+	<meta name="og:url" content="https://snippets.dennissauve.com" />
 
         <link rel="stylesheet" href="/resources/css/prism.css" />
         <link rel="stylesheet" href="/resources/css/snippets-style.css" />
@@ -98,7 +98,7 @@
             foreach($snippets as $snippet) {
                 echo "<h3>$snippet->name <br/> <small>$snippet->description</small></h3>";
                 $body = $snippet->body;
-                if($name == "html") {
+                if($name == "html" or $name == "typescript") {
                     $body = htmlspecialchars($body);
                 }
                 echo "<pre><code class='language-$name'>$body</code></pre>";
