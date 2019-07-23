@@ -49,6 +49,12 @@
     <head>
         <title>Dennis's Code Snippets</title>
 
+	<meta name="title" content="Dennis's Code Snippets">
+	<meta name="description" content="Bytes of useful code that I reference every now and then">
+	<meta name="author" content="Dennis Sauve">
+	<meta name="image" content="https://snippets.dennissauve.com/resources/images/site-image.png">
+	<meta name="url" content="https://snippets.dennissauve.com">
+
         <link rel="stylesheet" href="/resources/css/prism.css" />
         <link rel="stylesheet" href="/resources/css/snippets-style.css" />
     </head>
